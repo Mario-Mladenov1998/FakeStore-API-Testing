@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "4b03bf99-02c1-4347-9cc4-4f85b3277d40",
+		"name": "FakeStoreAPI - Postman Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50446854"
+	},
+	"item": [
+		{
+			"name": "GET All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products list is not empty\", () => {\r",
+							"    const data = pm.response.json();\r",
+							"\r",
+							"    pm.expect(data.length).to.be.greaterThan(0\r",
+							"    );\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Create Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response(\"Status is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product has an id\", () => {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.id).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product fields are correct\", () => {\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.title).to.eql(\"electronics\");\r",
+							"    pm.expect(data.price).to.eql(99.99);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Mario Test Product\",\r\n    \"price\": 99.99,\r\n    \"description\": \"This is a test Product created by Postman\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronics\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Updated title is correct\", () =>\r",
+							"{\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.title).to.eql(\"Mario Updated Product\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Updated price is correct\", () =>\r",
+							"{\r",
+							"    const data = pm.response.json();\r",
+							"    pm.expect(data.price).to.eql(129.99);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Mario Test Product\",\r\n    \"price\": 129.99,\r\n    \"description\": \"Update product created by Postman.\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronics\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/21",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"21"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
